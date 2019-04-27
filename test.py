@@ -31,55 +31,52 @@ def handle_dialog(res, req):
     alise_deck = []
     deck_id = 0
     move = 0
-    res['response']['text'] = ''
 
     if req['session']['new']:
         deck_id = new_deck()
         alise_deck = translate(give_cards(deck_id, 6)['cards'])
         player_deck = translate(give_cards(deck_id, 6)['cards'])
-        res['response']['text'] += '\nТвоя колода'
-        res['response']['text'] += '\n'
-        res['response']['text'] += player_deck
+        res['response']['text'] = 'Твоя колода'
+        res['response']['text'] = player_deck
         return
 
     if move == 0:
         if not (req['request']['original_utterance'] in '123456'):
-            res['response']['text'] += '\nНе понимаю'
+            res['response']['text'] = 'Не понимаю'
             return
 
         con = player_deck.pop(req['request']['original_utterance'] - 1)
-        res['response']['text'] += '\nТы кинул(а)\n'
-        res['response']['text'] += con
+        res['response']['text'] = 'Ты кинул(а)'
+        res['response']['text'] = con
         card = find_card(alise_deck, con['price'])
 
         if not card:
             alise_deck.append(con)
-            res['response']['text'] += '\nВзяла'
+            res['response']['text'] = 'Взяла'
             return
 
-        res['response']['text'] += '\n'
-        res['response']['text'] += alise_deck.pop(card)
+        res['response']['text'] = alise_deck.pop(card)
 
         alise_deck.append(translate(give_cards(deck_id, 1)['cards']))
         player_deck.append(translate(give_cards(deck_id, 1)['cards']))
-        res['response']['text'] += '\nТвоя новая карта\n'
-        res['response']['text'] += player_deck[-1]
+        res['response']['text'] = 'Твоя новая карта'
+        res['response']['text'] = player_deck[-1]
 
-        res['response']['text'] += '\nЭто тебе\n'
+        res['response']['text'] = 'Это тебе'
         con = alise_deck.pop(card)
-        res['response']['text'] += con
+        res['response']['text'] = con
         move = 1
 
     elif move == 1:
         if not (req['request']['original_utterance'] in '123456' or
                         req['request']['original_utterance'] in 'Взять карту'):
-            res['response']['text'] += '\nНе понимаю'
+            res['response']['text'] = 'Не понимаю'
             return
 
         if req['request']['original_utterance'] == 'Взять карту':
             player_deck.append(con)
-            res['response']['text'] += '\nТвоя колода\n'
-            res['response']['text'] += player_deck
+            res['response']['text'] = 'Твоя колода'
+            res['response']['text'] = player_deck
             return
 
         player_card = player_deck.pop(req['request']['original_utterance'])
