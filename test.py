@@ -37,7 +37,6 @@ def handle_dialog(res, req):
         alise_deck = translate(give_cards(deck_id, 6)['cards'])
         player_deck = translate(give_cards(deck_id, 6)['cards'])
         res['response']['text'] = 'Твоя колода'
-        return
         res['response']['text'] = player_deck
         return
 
