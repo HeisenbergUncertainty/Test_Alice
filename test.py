@@ -7,8 +7,7 @@ import sys
 
 app = Flask(__name__)
 
-logging.basicConfig(level=logging.INFO, stream=sys.stdout,
-                    format='%(asctime)s %(levelname)s %(name)s %(message)s')
+logging.basicConfig(level=logging.INFO, stream=sys.stdout, format='%(asctime)s %(levelname)s %(name)s %(message)s')
 
 sessionStorage = {}
 con = []
@@ -23,10 +22,7 @@ def main():
     response = {
         'session': request.json['session'],
         'version': request.json['version'],
-        'response': {
-            'end_session': False
-        }
-    }
+        'response': {'end_session': False}}
     handle_dialog(response, request.json)
     logging.info('Request: %r', response)
     return json.dumps(response)
