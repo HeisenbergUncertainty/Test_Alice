@@ -13,7 +13,6 @@ sessionStorage = {}
 con = []
 player_deck = []
 alise_deck = []
-deck_id = 0
 move = 0
 
 @app.route('/post', methods=['POST'])
