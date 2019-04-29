@@ -29,7 +29,6 @@ def main():
 
 
 def handle_dialog(res, req):
-    zzz = 0
     if req['session']['new']:
         deck_id = new_deck()
         sessionStorage[user_id] = {'suggests': [{'title': "Да", 'hide': True}, {'title': "Нет", 'hide': True}]}
@@ -41,7 +40,7 @@ def handle_dialog(res, req):
 
         return
 
-    if move == 0:
+    elif move == 0:
         if not (req['request']['original_utterance'] in '123456'):
             res['response']['text'] = 'Не понимаю'
             return
