@@ -5,8 +5,7 @@ import json
 
 app = Flask(__name__)
 
-
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, stream=sys.stdout, format='%(asctime)s %(levelname)s %(name)s %(message)s')
 
 sessionStorage = {}
 
