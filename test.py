@@ -7,9 +7,15 @@ import sys
 
 app = Flask(__name__)
 
-logging.basicConfig(level=logging.INFO, stream=sys.stdout, format='%(asctime)s %(levelname)s %(name)s %(message)s')
+logging.basicConfig(level=logging.INFO, stream=sys.stdout,
+                    format='%(asctime)s %(levelname)s %(name)s %(message)s')
 
 sessionStorage = {}
+con = []
+player_deck = []
+alise_deck = []
+deck_id = 0
+move = 0
 
 @app.route('/post', methods=['POST'])
 def main():
@@ -27,27 +33,19 @@ def main():
 
 
 def handle_dialog(res, req):
-    con = []
-    player_deck = []
-    alise_deck = []
-    deck_id = 0
-    move = 0
-
+    
     if req['session']['new']:
-        
-          sessionStorage[user_id] = {
+        sessionStorage[user_id] = {
             'suggests': [
                 {'title': "Да", 'hide': True},
                 {'title': "Нет", 'hide': True}
-            ]
-        }
+            ]}
         deck_id = new_deck()
         alise_deck = translate(give_cards(deck_id, 6)['cards'])
         player_deck = translate(give_cards(deck_id, 6)['cards'])
         res['response']['text'] = 'Твоя колода'
         res['response']['text'] = player_deck
-        
-        
+
         res['response']['buttons'] = sessionStorage[user_id]['suggests']
 
         return
@@ -81,7 +79,7 @@ def handle_dialog(res, req):
 
     elif move == 1:
         if not (req['request']['original_utterance'] in '123456' or
-                        req['request']['original_utterance'] in 'Взять карту'):
+                req['request']['original_utterance'] in 'Взять карту'):
             res['response']['text'] = 'Не понимаю'
             return
 
@@ -97,20 +95,25 @@ def handle_dialog(res, req):
     return
 
 
-
 def new_deck():
-    response = requests.get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
-    deck_id = response.json()["deck_id"]
-    return deck_id
+    response = requests.get(
+        'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
+    deck_id1 = response.json()["deck_id"]
+    return deck_id1
+
 
 def give_cards(id, n):
-    response = requests.get('https://deckofcardsapi.com/api/deck/{}/shuffle/'.format(id)).json()
+    response = requests.get(
+        'https://deckofcardsapi.com/api/deck/{}/shuffle/'.format(id)).json()
 
     if n > response["remaining"]:
         n = response["remaining"]
 
-    response = requests.get('https://deckofcardsapi.com/api/deck/{}/draw/?count={}'.format(id, n)).json()
+    response = requests.get(
+        'https://deckofcardsapi.com/api/deck/{}/draw/?count={}'.format(id,
+                                                                       n)).json()
     return response
+
 
 def translate(data):
     ans = []
@@ -128,9 +131,10 @@ def translate(data):
             elif price == 'KING':
                 price = 13
 
-        ans.append({'value':x['value'], 'suit': x['suit'], 'price': price})
+        ans.append({'value': x['value'], 'suit': x['suit'], 'price': price})
 
     return ans
+
 
 def find_card(data, n):
     for i in len(data):
@@ -138,6 +142,8 @@ def find_card(data, n):
             return i
     return False
 
+
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
+
