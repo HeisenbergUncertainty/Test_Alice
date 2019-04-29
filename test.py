@@ -33,13 +33,13 @@ def main():
 
 
 def handle_dialog(res, req):
+    global con, player_deck, alise_deck, deck_id, move
     
     if req['session']['new']:
         sessionStorage[user_id] = {
             'suggests': [
                 {'title': "Да", 'hide': True},
-                {'title': "Нет", 'hide': True}
-            ]}
+                {'title': "Нет", 'hide': True}]}
         deck_id = new_deck()
         alise_deck = translate(give_cards(deck_id, 6)['cards'])
         player_deck = translate(give_cards(deck_id, 6)['cards'])
