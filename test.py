@@ -22,6 +22,7 @@ except Exception as e:
     
 @app.route('/post', methods=['POST'])
 def main():
+    global con, player_deck, alise_deck, move, deck_id
     logging.info('Request: %r', request.json)
     response = {
         'session': request.json['session'],
