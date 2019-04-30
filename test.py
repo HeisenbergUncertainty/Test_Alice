@@ -131,7 +131,7 @@ def translate(data):
 
 
 def find_card(data, n):
-    for i in len(data):
+    for i in range(len(data)):
         if data[i]['price'] > n:
             return i
     return False
