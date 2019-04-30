@@ -30,7 +30,7 @@ def main():
 
 
 def handle_dialog(res, req):
-    global move
+    global move, player_deck, alise_deck
     user_id = req['session']['user_id']
     if req['session']['new']:
         deck_id = new_deck()
