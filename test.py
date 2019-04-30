@@ -30,7 +30,7 @@ def main():
 def handle_dialog(res, req):
     if req['session']['new']:
         deck_id = new_deck()
-        sessionStorage[user_id] = {'suggests': [{'title': "Да", 'hide': True}, {'title': "Нет", 'hide': True}]}
+#         sessionStorage[user_id] = {'suggests': [{'title': "Да", 'hide': True}, {'title': "Нет", 'hide': True}]}
         alise_deck = translate(give_cards(deck_id, 6)['cards'])
         player_deck = translate(give_cards(deck_id, 6)['cards'])
         res['response']['text'] = 'Твоя колода'
