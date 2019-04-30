@@ -70,7 +70,7 @@ def handle_dialog(res, req):
             alise_deck.append(con)
             res['response']['text'] = 'Взяла\n'
             player_deck.append(translate(give_cards(deck_id, 1)['cards']))
-            res['response']['text'] = 'Твоя новая карта:\n'
+            res['response']['text'] += 'Твоя новая карта:\n'
             res['response']['text'] += str(player_deck[-1])
             return
 
