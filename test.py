@@ -14,7 +14,7 @@ sessionStorage = {}
 
 try:
   with open("data_file.json", "r") as read_file:
-    con, player_deck, alise_deck, move, deck_id = json.load(read_file)
+      con, player_deck, alise_deck, move, deck_id = json.load(read_file)
 except Exception as e:
     print(e)
 
@@ -33,7 +33,7 @@ def main():
 
     try:
       with open("data_file.json", "w") as write_file:
-        json.dump([con, player_deck, alise_deck, move, deck_id], write_file)
+          json.dump([con, player_deck, alise_deck, move, deck_id], write_file)
     except Exception as e:
         print(e)
         
