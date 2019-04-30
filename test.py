@@ -11,12 +11,15 @@ logging.basicConfig(level=logging.INFO, stream=sys.stdout,
                     format='%(asctime)s %(levelname)s %(name)s %(message)s')
 
 sessionStorage = {}
-con = []
-player_deck = []
-alise_deck = []
-move = 0
 
+try:
+  with open("data_file.json", "r") as read_file:
+    con, player_deck, alise_deck, move, deck_id = json.load(read_file)
+except Exception as e:
+    print(e)
 
+  
+    
 @app.route('/post', methods=['POST'])
 def main():
     logging.info('Request: %r', request.json)
@@ -26,11 +29,18 @@ def main():
         'response': {'end_session': False}}
     handle_dialog(response, request.json)
     logging.info('Request: %r', response)
+
+    try:
+      with open("data_file.json", "w") as write_file:
+        json.dump([con, player_deck, alise_deck, move, deck_id], write_file)
+    except Exception as e:
+        print(e)
+        
     return json.dumps(response)
 
 
 def handle_dialog(res, req):
-    global move, player_deck, alise_deck
+    global con, player_deck, alise_deck, move, deck_id
     user_id = req['session']['user_id']
     if req['session']['new']:
         deck_id = new_deck()
