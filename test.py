@@ -78,7 +78,7 @@ def handle_dialog(res, req):
         res['response']['text'] += str(player_deck[-1])
 
         res['response']['text'] = 'Это тебе\n'
-        con += str(alise_deck.pop(card))
+        con += alise_deck.pop(card)
         res['response']['text'] += str(con)
         move = 1
 
