@@ -67,7 +67,7 @@ def handle_dialog(res, req):
         card = find_card(alise_deck, con['price'])
 
         if not card:
-            alise_deck.append(con[0])
+            alise_deck.append(con.copy())
             res['response']['text'] = 'Взяла\n'
             player_deck.append(translate(give_cards(deck_id, 1)['cards']))
             res['response']['text'] += 'Твоя новая карта:\n'
