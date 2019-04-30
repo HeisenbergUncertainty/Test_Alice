@@ -87,8 +87,7 @@ def handle_dialog(res, req):
         move = 1
 
     elif move == 1:
-        sessionStorage[user_id] = {
-            'suggests': [{'title': "1", 'hide': True}, {'title': "2", 'hide': True}, {'title': "3", 'hide': True}, {'title': "4", 'hide': True}, {'title': "5", 'hide': True}, {'title': "6", 'hide': True}, , {'title': "5", 'hide': True}, {'title': "Взять карту", 'hide': True}]}
+        sessionStorage[user_id] = {'suggests': [{'title': "1", 'hide': True}, {'title': "2", 'hide': True}, {'title': "3", 'hide': True}, {'title': "4", 'hide': True}, {'title': "5", 'hide': True}, {'title': "6", 'hide': True}, {'title': "Взять карту", 'hide': True}]}
         
         if not (req['request']['original_utterance'] in '123456' or
                 req['request']['original_utterance'] in 'Взять карту'):
