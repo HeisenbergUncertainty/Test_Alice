@@ -70,7 +70,7 @@ def handle_dialog(res, req):
             res['response']['text'] = 'Взяла'
             return
 
-        res['response']['text'] = alise_deck.pop(card)
+        res['response']['text'] += str(alise_deck.pop(card))
 
         alise_deck.append(translate(give_cards(deck_id, 1)['cards']))
         player_deck.append(translate(give_cards(deck_id, 1)['cards']))
@@ -78,7 +78,7 @@ def handle_dialog(res, req):
         res['response']['text'] += str(player_deck[-1])
 
         res['response']['text'] = 'Это тебе\n'
-        con = alise_deck.pop(card)
+        con += str(alise_deck.pop(card))
         res['response']['text'] += str(con)
         move = 1
 
@@ -94,7 +94,7 @@ def handle_dialog(res, req):
             res['response']['text'] += str(player_deck)
             return
 
-        player_card = player_deck.pop(req['request']['original_utterance'])
+        player_card = player_deck.pop(int(req['request']['original_utterance']))
         move = 0
 
     return
