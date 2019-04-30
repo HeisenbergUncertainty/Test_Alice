@@ -38,7 +38,7 @@ def handle_dialog(res, req):
         alise_deck = translate(give_cards(deck_id, 6)['cards'])
         player_deck = translate(give_cards(deck_id, 6)['cards'])
         res['response']['text'] = 'Твоя колода'
-        res['response']['text'] = player_deck
+        res['response']['text'] += str(player_deck)
         res['response']['buttons'] = sessionStorage[user_id]['suggests']
 
         return
@@ -50,7 +50,7 @@ def handle_dialog(res, req):
 
         con = player_deck.pop(req['request']['original_utterance'] - 1)
         res['response']['text'] = 'Ты кинул(а)'
-        res['response']['text'] = con
+        res['response']['text'] += str(con)
         card = find_card(alise_deck, con['price'])
 
         if not card:
@@ -63,11 +63,11 @@ def handle_dialog(res, req):
         alise_deck.append(translate(give_cards(deck_id, 1)['cards']))
         player_deck.append(translate(give_cards(deck_id, 1)['cards']))
         res['response']['text'] = 'Твоя новая карта'
-        res['response']['text'] = player_deck[-1]
+        res['response']['text'] += str(player_deck[-1])
 
         res['response']['text'] = 'Это тебе'
         con = alise_deck.pop(card)
-        res['response']['text'] = con
+        res['response']['text'] += str(con)
         move = 1
 
     elif move == 1:
@@ -79,7 +79,7 @@ def handle_dialog(res, req):
         if req['request']['original_utterance'] == 'Взять карту':
             player_deck.append(con)
             res['response']['text'] = 'Твоя колода'
-            res['response']['text'] = player_deck
+            res['response']['text'] += str(player_deck)
             return
 
         player_card = player_deck.pop(req['request']['original_utterance'])
