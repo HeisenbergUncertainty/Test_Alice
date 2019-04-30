@@ -3,16 +3,19 @@ import logging
 import json
 import requests
 import sys
+import os
 
 app = Flask(__name__)
 
-logging.basicConfig(level=logging.INFO, stream=sys.stdout, format='%(asctime)s %(levelname)s %(name)s %(message)s')
+logging.basicConfig(level=logging.INFO, stream=sys.stdout,
+                    format='%(asctime)s %(levelname)s %(name)s %(message)s')
 
 sessionStorage = {}
 con = []
 player_deck = []
 alise_deck = []
 move = 0
+
 
 @app.route('/post', methods=['POST'])
 def main():
@@ -30,7 +33,8 @@ def handle_dialog(res, req):
     user_id = req['session']['user_id']
     if req['session']['new']:
         deck_id = new_deck()
-        sessionStorage[user_id] = {'suggests': [{'title': "Да", 'hide': True}, {'title': "Нет", 'hide': True}]}
+        sessionStorage[user_id] = {
+            'suggests': [{'title': "Да", 'hide': True}, {'title': "Нет", 'hide': True}]}
         alise_deck = translate(give_cards(deck_id, 6)['cards'])
         player_deck = translate(give_cards(deck_id, 6)['cards'])
         res['response']['text'] = 'Твоя колода'
@@ -137,4 +141,4 @@ if __name__ == '__main__':
         port = int(os.environ.get("PORT", 5000))
         app.run(host='0.0.0.0', port=port)
     except Exception as e:
-        print(e) 
+        print(e)
