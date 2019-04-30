@@ -113,7 +113,7 @@ def translate(data):
     for x in data:
         price = x['value']
         if price.isdigit():
-            price = int(x['suit'])
+            price = int(price)
         else:
             if price == 'ACE':
                 price = 14
