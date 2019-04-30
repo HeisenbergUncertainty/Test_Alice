@@ -49,7 +49,7 @@ def handle_dialog(res, req):
             res['response']['text'] = 'Не понимаю'
             return
 
-        con = player_deck.pop(req['request']['original_utterance'] - 1)
+        con = player_deck.pop(int(req['request']['original_utterance']) - 1)
         res['response']['text'] = 'Ты кинул(а)\n'
         res['response']['text'] += str(con)
         card = find_card(alise_deck, con['price'])
