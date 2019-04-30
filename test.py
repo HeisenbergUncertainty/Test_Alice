@@ -45,8 +45,6 @@ def handle_dialog(res, req):
     user_id = req['session']['user_id']
     if req['session']['new']:
         deck_id = new_deck()
-        sessionStorage[user_id] = {
-            'suggests': [{'title': "Да", 'hide': True}, {'title': "Нет", 'hide': True}]}
         alise_deck = translate(give_cards(deck_id, 6)['cards'])
         player_deck = translate(give_cards(deck_id, 6)['cards'])
         res['response']['text'] = 'Твоя колода\n'
@@ -56,6 +54,9 @@ def handle_dialog(res, req):
         return
 
     elif move == 0:
+        sessionStorage[user_id] = {
+            'suggests': [{'title': "1", 'hide': True}, {'title': "2", 'hide': True}, {'title': "3", 'hide': True}, {'title': "4", 'hide': True}, {'title': "5", 'hide': True}, {'title': "6", 'hide': True}]}
+        
         if not (req['request']['original_utterance'] in '123456'):
             res['response']['text'] = 'Не понимаю'
             return
@@ -67,7 +68,10 @@ def handle_dialog(res, req):
 
         if not card:
             alise_deck.append(con)
-            res['response']['text'] = 'Взяла'
+            res['response']['text'] = 'Взяла\n'
+            player_deck.append(translate(give_cards(deck_id, 1)['cards']))
+            res['response']['text'] = 'Твоя новая карта:\n'
+            res['response']['text'] += str(player_deck[-1])
             return
 
         res['response']['text'] += str(alise_deck.pop(card))
@@ -83,6 +87,9 @@ def handle_dialog(res, req):
         move = 1
 
     elif move == 1:
+        sessionStorage[user_id] = {
+            'suggests': [{'title': "1", 'hide': True}, {'title': "2", 'hide': True}, {'title': "3", 'hide': True}, {'title': "4", 'hide': True}, {'title': "5", 'hide': True}, {'title': "6", 'hide': True}, , {'title': "5", 'hide': True}, {'title': 'Взять карту', 'hide': True}]}
+        
         if not (req['request']['original_utterance'] in '123456' or
                 req['request']['original_utterance'] in 'Взять карту'):
             res['response']['text'] = 'Не понимаю'
