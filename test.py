@@ -49,7 +49,7 @@ def handle_dialog(res, req):
         player_deck = translate(give_cards(deck_id, 6)['cards'])
         res['response']['text'] = 'Твоя колода\n'
         res['response']['text'] += str(player_deck)
-        res['response']['buttons'] = sessionStorage[user_id]['suggests']
+#         res['response']['buttons'] = sessionStorage[user_id]['suggests']
 
         return
 
